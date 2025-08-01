@@ -36,6 +36,16 @@ def register():
     conn.close()
     return "✅ User registered successfully!"
 
+@app.route('/users')
+def view_users():
+    conn = sqlite3.connect('users.db')  # Replace with your actual DB
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users")  # Table name might differ
+    users = cur.fetchall()
+    conn.close()
+    return render_template("users.html", users=users)
+
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True)
